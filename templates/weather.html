@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css"%}">
+    <style media="screen">
+      .col-md-2{
+        border-radius:10%;
+        border: 3px ridge {{color}};
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6" style='background:url("{% static "images/tutorial.png"%}");background-size:100% 100%;'>
+          <form method="post" class='form-inline' style='margin:10% 0% 20% 25%;'>
+            {% csrf_token %}
+            <input type="text" name="c" class='form-control' placeholder="Enter City ...">
+            <input type="submit" value="Search..." class='btn btn-success'>
+          </form>
+          </div>
+          {% if map %}
+            <div class="col-md-6">
+              <iframe height=300 width =100% src="{{map}}"></iframe>
+            </div>
+            {% endif%}
+          </div>
+        <div class="row text-center">
+          {% if e %}
+          <h1 class='alert alert-danger'>{{e}}</h1>
+          {% endif %}
+          {% for i in a %}
+            <div class="col-md-2  p-2 text-dark mx-auto">
+              <span align=left> <img src="{{i.i}}" alt=""> </span>
+              <strong> <h3 style='display:inline'>{{i.name}}</h3> </strong>
+              <h4 style="color:{{color}}">{{i.dt}}</h4>
+              <span>{{i.ab}} &deg C | </span>
+              <span><strong>{{i.ds}}</strong></span>
+              <h5>Clouds: {{i.cl}} %</h5>
+            </div>
+          {% endfor %}
+        </div>
+
+      </div>
+  </body>
+</html>
